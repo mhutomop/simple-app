@@ -69,10 +69,9 @@ void StudentsController::add_new_student
         ws_data.StartObject();
         ws_data.String("message", 7);
         ws_data.String("Successfully add new student!", 29);
-        ws_server->loop->defer([&buffer]() { 
-            ws_server->broadcast_message("broadcast-notification", buffer.GetString());
-            buffer.Clear();
-        });
+        ws_data.EndObject();
+        ws_server->broadcast_message("broadcast-notification", buffer.GetString());
+        buffer.Clear();
     }
     catch (std::exception const& err) {
         std::cerr << "Exception: " << err.what() << std::endl;
